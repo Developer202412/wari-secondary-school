@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// 1. ANNOUNCEMENTS & NEWS
+model Announcement {
+  id        String   @id @default(uuid())
+  title     String
+  content   String   @db.Text
+  category  String   @default("General") // Academic, Discipline, Events
+  isPinned  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 2. ACADEMIC RESULTS (Form 5 & Form 6 - Mocks & Monthly)
+enum ExamType {
+  MONTHLY
+  MOCK
+}
+
+enum StudentClass {
+  FORM_FIVE
+  FORM_SIX
+}
+
+model Result {
+  id           String       @id @default(uuid())
+  studentName  String
+  regNumber    String       // Reg / Index Number
+  studentClass StudentClass
+  combination  String       // Mfano: PCM, PCB, HGL, EGM, CBG, HKL
+  examType     ExamType
+  examMonth    String       // Mfano: "March", "May"
+  examYear     Int          // Mfano: 2026
+  
+  // Masomo ya Mchanganuo (Core Principal Subjects + Subsidiary)
+  // Format ya JSON Data:
+  // {
+  //   "principalSubjects": { "Physics": "A", "Chemistry": "B", "Math": "C" },
+  //   "subsidiarySubjects": { 
+  //     "HTM": "S",             // Historia ya Tanzania na Maadili
+  //     "BAM": "S",             // Basic Applied Mathematics
+  //     "AC": "S"               // Academic Communication
+  //   }
+  // }
+  subjects     Json         
+  division     String       // Mfano: "Division I", "Division II"
+  points       Int          // Mfano: 7
+  createdAt    DateTime     @default(now())
+
+  @@index([regNumber, examYear, examType])
+}
+
+// 3. STAFF DIRECTORY (Wakuu wa Idara za Masomo, Nidhamu na Taaluma)
+enum DepartmentRole {
+  ACADEMIC_HEAD      // Mkuu wa Taaluma
+  DISCIPLINE_HEAD    // Mkuu wa Nidhamu
+  SUBJECT_HEAD       // Mkuu wa Idara ya Somo (Science, Arts, Commercials)
+  ADMINISTRATION     // Utawala
+}
+
+model Staff {
+  id           String         @id @default(uuid())
+  fullName     String
+  title        String         // Mfano: "Mr. Mallya", "Tr. Sarah"
+  role         DepartmentRole
+  department   String         // Mfano: "Mathematics & BAM Dept", "Discipline Panel", "Academic Office"
+  email        String?
+  phone        String?
+  imageUrl     String?        // Picha ya Mwalimu
+  bio          String?        @db.Text
+  displayOrder Int            @default(0) // Mpangilio wa kuonyeshwa kwenye UI
+  createdAt    DateTime       @default(now())
+}
+
+// 4. ONLINE ADMISSIONS (Inasubiri mwongozo wa Hard Copy kutoka kwako)
+model StudentApplication {
+  id             String   @id @default(uuid())
+  applicantName  String
+  parentPhone    String
+  combination    String
+  status         String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  formData       Json     // Taarifa zote zitakazolandana na fomu ya hardcopy
+  createdAt      DateTime @default(now())
+}
+
+// 5. FUTURE EXTENSION: NOTES & RESOURCES (Ipo tayari kwa matumizi ya baadaye)
+model AcademicResource {
+  id          String       @id @default(uuid())
+  title       String
+  subject     String       // Mfano: "Advanced Physics", "HTM", "AC"
+  targetClass StudentClass
+  fileUrl     String       // PDF Storage Link
+  isPublished Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+}
+
+model Inquiry {
+  id        String   @id @default(uuid())
+  fullName  String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  createdAt DateTime @default(now())
+}

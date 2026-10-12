@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+/* =========================================================
+   ST. THOMAS AQUINAS FOUNDATION
+   GLOBAL DESIGN SYSTEM
+   ========================================================= */
+
+:root {
+  /* =======================================================
+     BRAND COLORS
+     ======================================================= */
+
+  --staf-blue: #0b2a4a;
+  --staf-blue-light: #164a73;
+
+  --staf-yellow: #d4af37;
+  --staf-green: #176b45;
+
+  --staf-white: #ffffff;
+  --staf-black: #111111;
+  --staf-cream: #f8f9f6;
+
+  /* =======================================================
+     SUPPORTING COLORS
+     ======================================================= */
+
+  --staf-muted: #64748b;
+  --staf-border: #dfe5e9;
+
+  /* =======================================================
+     SEMANTIC COLORS
+     ======================================================= */
+
+  --background: var(--staf-cream);
+  --foreground: var(--staf-blue);
+
+  /* =======================================================
+     TYPOGRAPHY
+     ======================================================= */
+
+  --font-heading: var(--font-playfair);
+  --font-body: var(--font-inter);
+}
+
+
+/* =========================================================
+   TAILWIND THEME
+   ========================================================= */
+
+@theme inline {
+  /* Brand */
+  --color-staf-blue: var(--staf-blue);
+  --color-staf-blue-light: var(--staf-blue-light);
+  --color-staf-yellow: var(--staf-yellow);
+  --color-staf-green: var(--staf-green);
+
+  /* Neutral */
+  --color-staf-white: var(--staf-white);
+  --color-staf-black: var(--staf-black);
+  --color-staf-cream: var(--staf-cream);
+
+  /* Supporting */
+  --color-staf-muted: var(--staf-muted);
+  --color-staf-border: var(--staf-border);
+
+  /* Semantic */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Typography */
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font-heading), serif;
+}
+
+p {
+  margin: 0;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   FORM ELEMENTS
+   ========================================================= */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+
+/* =========================================================
+   IMAGES
+   ========================================================= */
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background: var(--staf-yellow);
+  color: var(--staf-blue);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--staf-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--staf-blue);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--staf-blue-light);
+}
